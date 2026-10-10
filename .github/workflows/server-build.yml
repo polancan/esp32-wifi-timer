@@ -1,0 +1,23 @@
+name: Server build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Restore dependencies
+        run: dotnet restore 01_SERVER/SOURCE_v0.9/TimerServer.csproj
+      - name: Build server
+        run: dotnet build 01_SERVER/SOURCE_v0.9/TimerServer.csproj --configuration Release --no-restore
