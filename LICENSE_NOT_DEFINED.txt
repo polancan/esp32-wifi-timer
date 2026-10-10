@@ -1,0 +1,2 @@
+No software/hardware license was defined in the source material supplied for this project.
+Before public distribution or third-party reuse, the project owner should choose and add an explicit license.

@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Časomíra – Admin</title>
+<style>
+:root{font-family:Inter,Segoe UI,Arial,sans-serif;color:#1f2937;background:#f4f6f8}*{box-sizing:border-box}body{margin:0}.wrap{max-width:1500px;margin:auto;padding:20px}
+h1{margin:0 0 3px}.sub{color:#667085;margin-bottom:16px}.card{background:#fff;border:1px solid #dfe3e8;border-radius:12px;padding:16px;box-shadow:0 2px 6px #00000008;margin-bottom:16px}
+.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}label{font-size:12px;color:#475467;display:block;margin-bottom:3px}input,select,textarea{padding:9px;border:1px solid #cbd5e1;border-radius:7px;font:inherit}input[type=text]{width:100%}textarea{width:100%;min-height:105px;resize:vertical}
+button,.btn{border:0;border-radius:7px;padding:9px 13px;background:#1f6feb;color:white;cursor:pointer;text-decoration:none;display:inline-block;font-weight:600}button.secondary,.btn.secondary{background:#667085}.danger{background:#b42318!important}.good{background:#067647!important}.warn{background:#b54708!important}.undo{background:#6941c6!important}button:disabled{opacity:.42;cursor:not-allowed}
+.lanegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.lane{border:2px solid #e4e7ec;border-radius:12px;padding:13px;min-height:275px;background:#fff}.lane.pending{border-color:#f79009;background:#fffcf5}.lane.empty{opacity:.82}.lanehead{display:flex;justify-content:space-between;align-items:center}.lanehead h3{margin:0;font-size:19px}.counter{font-size:12px;color:#667085}
+.current{margin:12px 0;padding:10px;background:#f8fafc;border-radius:8px}.runner{font-size:20px;font-weight:750;margin:3px 0}.seq{font-size:12px;color:#667085}.pendingtime{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;color:#b54708;margin:5px 0}.next{font-size:13px;color:#475467;margin-top:9px}.next div{padding:2px 0}.prepare{margin-top:10px;padding:9px 10px;background:#eef4ff;border-left:4px solid #6172f3;border-radius:7px}.prepare .label{font-size:11px;font-weight:800;color:#3538cd;letter-spacing:.04em}.prepare .name{font-size:18px;font-weight:750;color:#1d2939;margin-top:2px}.after{margin-top:6px;font-size:12px;color:#667085}.pill{padding:3px 8px;border-radius:999px;font-size:11px;font-weight:700}.ready{background:#ecfdf3;color:#067647}.wait{background:#fff1e7;color:#b54708}.done{background:#eef4ff;color:#3538cd}.undoBox{margin-top:10px;padding-top:9px;border-top:1px dashed #d0d5dd}.undoInfo{font-size:11px;color:#667085;margin-bottom:5px}
+.device{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:10px;padding:9px 11px;background:#f8fafc;border-radius:8px}.device strong{font-size:13px}.battery{font-variant-numeric:tabular-nums}.online{color:#067647}.offline{color:#b42318}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:16px}.tablewrap{overflow:auto;max-height:520px}table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;border-bottom:1px solid #e5e7eb;text-align:left;white-space:nowrap}th{background:#f8fafc;position:sticky;top:0}.time{font-weight:750;font-variant-numeric:tabular-nums}.oktxt{color:#067647}.badtxt{color:#b42318}.small{font-size:12px;color:#667085}.actions{display:flex;gap:6px;flex-wrap:wrap}.actions button{padding:6px 9px;font-size:12px}
+@media(max-width:1150px){.lanegrid{grid-template-columns:repeat(2,1fr)}}@media(max-width:760px){.lanegrid,.twocol{grid-template-columns:1fr}.wrap{padding:10px}}
+
+.loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#0b1f3a,#132f54)}
+.loginCard{width:min(410px,100%);background:#fff;border-radius:16px;padding:28px;box-shadow:0 18px 60px #0005;text-align:center}.loginCard h1{color:#b42318}.loginCard input{font-size:24px;text-align:center;letter-spacing:.2em;width:180px}.loginError{color:#b42318;min-height:22px;margin-top:8px}.topbar{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:14px}.topbar .links{display:flex;gap:8px;flex-wrap:wrap}.firebrand{color:#b42318;font-weight:800}.displaylink{background:#b42318!important}.logout{background:#475467!important}
+
+/* Nový čistý vzhled. Původní pravidla výše zůstávají jako režim v0.6. */
+body.theme-clean{background:#eef2f6;color:#172334}
+.theme-clean .wrap{max-width:1560px;padding:16px}
+.theme-clean .topbar{background:#17324d;color:#fff;padding:11px 13px;border-radius:9px;margin-bottom:14px}
+.theme-clean .firebrand{color:#fff;font-size:15px;letter-spacing:.025em}
+.theme-clean .topbar .btn,.theme-clean .topbar button{background:#294863!important;border:1px solid #49647d;padding:7px 10px}
+.theme-clean h1{font-size:26px;letter-spacing:-.02em;color:#172334}
+.theme-clean h2{font-size:19px;color:#1d2d3d}
+.theme-clean .sub{color:#66798a;margin-bottom:14px}
+.theme-clean .card{border:1px solid #d5dee7;border-radius:9px;padding:14px;box-shadow:none;margin-bottom:12px}
+.theme-clean input,.theme-clean select,.theme-clean textarea{border-color:#cbd6e0;border-radius:6px;background:#fff}
+.theme-clean button,.theme-clean .btn{border-radius:6px;background:#146fd1;font-weight:650}
+.theme-clean button.secondary,.theme-clean .btn.secondary{background:#5e7183}
+.theme-clean .lanegrid{gap:10px}
+.theme-clean .lane{border:1px solid #d5dee7;border-radius:8px;padding:11px;min-height:250px;background:#fbfcfd}
+.theme-clean .lane.pending{border-color:#e4b04c;background:#fffaf0}
+.theme-clean .lanehead h3{font-size:17px}.theme-clean .counter{font-size:11px}
+.theme-clean .current{margin:9px 0;padding:9px;background:#f3f6f8;border-radius:6px}
+.theme-clean .runner{font-size:19px}.theme-clean .pendingtime{font-size:24px}
+.theme-clean .prepare{background:#edf5ff;border-left-color:#2580db;border-radius:6px}
+.theme-clean .prepare .label{color:#0759b6}.theme-clean .prepare .name{font-size:17px}
+.theme-clean .pill{border-radius:5px}.theme-clean .ready{background:#dcecff;color:#0759b6}.theme-clean .wait{background:#fff1cf;color:#8c5d00}
+.theme-clean .device{background:#f6f8fa;border:1px solid #e0e6eb;border-radius:6px}
+.theme-clean th{background:#f3f6f8}.theme-clean th,.theme-clean td{border-bottom-color:#e3e8ed}
+.theme-clean .loginScreen{background:#eef2f6}.theme-clean .loginCard{box-shadow:0 12px 32px #17324d1c;border:1px solid #d5dee7;border-radius:10px}.theme-clean .loginCard h1{color:#17324d}
+.themeSetting{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.themeSetting select{min-width:180px}.themeSetting .themeNote{font-size:12px;color:#667085}
+</style></head>
+<body>
+<div id="loginScreen" class="loginScreen">
+  <div class="loginCard">
+    <div style="font-size:42px">🚒</div>
+    <h1>Administrace časomíry</h1>
+    <p class="small">Zadej PIN obsluhy.</p>
+    <input id="pinInput" type="password" inputmode="numeric" maxlength="12" autocomplete="current-password" autofocus>
+    <div style="margin-top:14px"><button onclick="loginAdmin()">Přihlásit</button></div>
+    <div id="loginError" class="loginError"></div>
+    <div style="margin-top:16px"><a href="/display" class="btn secondary">Průběh soutěže</a></div>
+  </div>
+</div>
+<div id="adminApp" style="display:none"><div class="wrap">
+<div class="topbar"><div><span class="firebrand">🚒 DĚTSKÁ HASIČSKÁ ČASOMÍRA</span></div><div class="links"><a class="btn displaylink" href="/display" target="_blank">Průběh soutěže</a><a class="btn secondary" href="/">Rozcestí</a><button class="logout" onclick="logoutAdmin()">Odhlásit</button></div></div>
+<h1>8kanálová Wi‑Fi časomíra</h1><div class="sub">Každá dráha má vlastní pořadník. Dráhy se navzájem neblokují; STOP se podle zvoleného režimu potvrdí ručně nebo automaticky.</div>
+
+<div class="card">
+  <div class="row">
+    <div style="width:150px"><label>Stanice</label><input id="station" type="text" value="TIMER01"></div>
+    <div style="flex:1;min-width:250px"><label>Název série / skupiny</label><input id="sessionName" type="text" placeholder="např. 2.A – disciplína A"></div>
+    <div style="align-self:end"><button onclick="createSession()">Nová série</button></div>
+    <div style="align-self:end"><button class="danger" onclick="closeSession()">Ukončit sérii</button></div>
+  </div>
+  <div class="row" style="margin-top:12px;padding:10px 12px;background:#f8fafc;border-radius:8px">
+    <label style="display:flex;align-items:center;gap:9px;margin:0;cursor:pointer;font-size:14px;color:#1f2937">
+      <input id="autoConfirm" type="checkbox" style="width:18px;height:18px;margin:0">
+      <span><b>Automaticky potvrzovat výsledky</b><br><span class="small">Po STOP se čas rovnou potvrdí a připraví se další závodník. UNDO zůstává k dispozici.</span></span>
+    </label>
+    <span id="autoConfirmInfo" class="small"></span>
+  </div>
+  <div class="row themeSetting" style="margin-top:10px;padding:10px 12px;background:#f8fafc;border-radius:8px">
+    <div><label for="uiTheme"><b>Vzhled aplikace</b></label><select id="uiTheme"><option value="clean">Čistý</option><option value="legacy">Původní v0.6</option></select></div>
+    <div><div class="themeNote">Volba se použije pro administraci i veřejnou obrazovku aktivní série.</div><div id="uiThemeInfo" class="small"></div></div>
+  </div>
+  <div id="activeInfo" class="small" style="margin-top:9px"></div>
+  <div id="deviceInfo" class="device"><span class="offline">● časomíra zatím neposlala stav</span></div>
+</div>
+
+<div class="card">
+  <div class="row" style="justify-content:space-between"><h2 style="margin:0">Dráhy</h2><button class="secondary" onclick="loadActive()">Obnovit</button></div>
+  <div id="laneGrid" class="lanegrid" style="margin-top:12px"></div>
+</div>
+
+<div class="twocol">
+<div class="card">
+  <h2>Startovní listina</h2>
+  <div class="small">Import přepíše seznam aktivní série. Formát: <b>Jméno;Dráha;Pořadí</b>. Po prvním uloženém čase už seznam z bezpečnostních důvodů přepsat nelze.</div>
+  <textarea id="importText" placeholder="Jan Novák;1;1&#10;Petr Svoboda;1;2&#10;Eva Malá;2;1"></textarea>
+  <div class="row"><button onclick="importTextList()">Importovat text</button><input id="importFile" type="file" accept=".csv,.txt,.xlsx"><button class="secondary" onclick="importFileList()">Načíst CSV/XLSX</button></div>
+  <div id="importInfo" class="small" style="margin-top:7px"></div>
+</div>
+
+<div class="card" id="testCard">
+  <h2>Test bez ESP32</h2><div class="small">Simuluje STOP aktuálního člověka na zvolené dráze. Výsledek se zpracuje stejně jako reálný čas podle aktuálního režimu potvrzování.</div>
+  <div class="row" style="margin-top:12px"><select id="testLane"></select><input id="testSeconds" type="number" step="0.001" min="0.001" value="12.345" style="width:130px"><button onclick="testResult()">Vložit čas</button></div>
+</div>
+</div>
+
+<div class="card">
+  <div class="row" style="justify-content:space-between"><h2 style="margin-right:auto">Výsledky</h2><button class="secondary" onclick="loadResults()">Obnovit</button><a class="btn" id="exportLink" href="/api/export.xlsx">Export XLSX</a></div>
+  <div class="row" style="margin:10px 0"><input id="filterRunner" type="text" placeholder="Jméno" style="width:180px"><select id="filterSession"><option value="">Všechny série</option></select><select id="filterStatus"><option value="">Všechny stavy</option><option value="Pending">Čeká na potvrzení</option><option value="Confirmed">Potvrzeno</option><option value="Rejected">Zamítnuto</option><option value="Undone">Vráceno UNDO</option></select><button class="secondary" onclick="loadResults()">Filtrovat</button></div>
+  <div class="tablewrap"><table><thead><tr><th>Datum/čas</th><th>Dráha</th><th>Poř.</th><th>Jméno</th><th>Čas</th><th>Stav</th><th>Série</th><th>Akce</th></tr></thead><tbody id="resultsBody"></tbody></table></div>
+</div>
+
+<div class="card"><div class="row"><div id="serverStatus">Načítám…</div><button class="secondary" onclick="backupNow()">Backup DB</button><span id="backupInfo" class="small"></span></div></div>
+</div></div>
+<script>
+const q=s=>document.querySelector(s);let activeSessionId=null;let selectedUiTheme=localStorage.getItem('timerUiTheme')==='legacy'?'legacy':'clean';
+for(let i=1;i<=8;i++)q('#testLane').insertAdjacentHTML('beforeend',`<option value="${i}">Dráha ${i}</option>`);
+function esc(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+function applyUiTheme(v){selectedUiTheme=v==='legacy'?'legacy':'clean';document.body.classList.remove('theme-clean','theme-legacy');document.body.classList.add('theme-'+selectedUiTheme);localStorage.setItem('timerUiTheme',selectedUiTheme);if(q('#uiTheme'))q('#uiTheme').value=selectedUiTheme;}
+function fmtDate(iso){if(!iso)return '';return new Date(iso).toLocaleString('cs-CZ',{hour12:false});}
+async function api(url,opt){const r=await fetch(url,opt);if(r.status===401&&!url.startsWith('/api/auth/'))showLogin();if(!r.ok)throw new Error(`${r.status} ${await r.text()}`);return r.headers.get('content-type')?.includes('json')?r.json():r.text();}
+function statusLabel(s){return s==='Pending'?'ČEKÁ NA POTVRZENÍ':s==='Confirmed'?'POTVRZENO':s==='Rejected'?'ZAMÍTNUTO':s==='Undone'?'VRÁCENO (UNDO)':s;}
+
+async function status(){try{const s=await api('/api/status');q('#serverStatus').innerHTML=`<span class="oktxt">● server běží</span> &nbsp; DB <b>${esc(s.database)}</b> &nbsp; výsledků <b>${s.resultCount}</b> &nbsp; čeká <b>${s.pendingCount}</b>`;if(!s.testEndpoints)q('#testCard').style.display='none';if(!q('#station').dataset.changed)q('#station').value=s.defaultStationId;}catch(e){q('#serverStatus').innerHTML=`<span class="badtxt">Server nedostupný: ${esc(e.message)}</span>`;}}
+q('#station').addEventListener('input',()=>q('#station').dataset.changed='1');
+
+async function loadDevice(){const station=q('#station').value.trim();if(!station)return;try{const d=await api('/api/device/status/'+encodeURIComponent(station));if(!d.online){q('#deviceInfo').innerHTML=`<span class="offline">● časomíra offline</span>${d.lastSeenUtc?`<span>naposledy ${fmtDate(d.lastSeenUtc)}</span>`:''}`;return;}const batt=d.batteryVoltage==null?'baterie —':`<span class="battery">baterie <b>${Number(d.batteryVoltage).toFixed(2)} V</b>${d.batteryPercent==null?'':` (~${d.batteryPercent} %)`}</span>`;q('#deviceInfo').innerHTML=`<span class="online"><b>● časomíra online</b></span><span>${batt}</span><span>FW <b>${esc(d.firmwareVersion||'—')}</b></span><span>běží ${bitCount(d.runningMask||0)} drah</span><span>čeká ${bitCount(d.waitingMask||0)}</span>`;}catch(e){q('#deviceInfo').innerHTML=`<span class="offline">Stav ESP nelze načíst</span>`;}}
+function bitCount(v){let n=0;for(let i=0;i<8;i++)if(v&(1<<i))n++;return n;}
+
+async function createSession(){const body={stationId:q('#station').value.trim(),name:q('#sessionName').value.trim()||null,assignments:[],autoConfirmResults:q('#autoConfirm').checked,uiTheme:q('#uiTheme').value};try{await api('/api/sessions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});q('#sessionName').value='';await refreshAll();}catch(e){alert('Chyba: '+e.message);}}
+async function saveAutoConfirm(){
+ if(!activeSessionId){q('#autoConfirmInfo').textContent=q('#autoConfirm').checked?'Automatické potvrzení bude použito pro novou sérii.':'Ruční potvrzení bude použito pro novou sérii.';return;}
+ const enabled=q('#autoConfirm').checked;
+ if(enabled&&!confirm('Zapnout automatické potvrzování? Nově doběhnuté časy se od této chvíle potvrdí bez ruční kontroly.')){q('#autoConfirm').checked=false;return;}
+ try{await api(`/api/sessions/${activeSessionId}/settings`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({autoConfirmResults:enabled})});q('#autoConfirmInfo').innerHTML=enabled?'<span class="oktxt">Automatické potvrzení je zapnuté.</span>':'Ruční potvrzení je zapnuté.';await loadActive();}catch(e){q('#autoConfirm').checked=!enabled;alert('Nastavení se nepodařilo uložit: '+e.message);}
+}
+q('#autoConfirm').addEventListener('change',saveAutoConfirm);
+async function saveUiTheme(){
+ const theme=q('#uiTheme').value==='legacy'?'legacy':'clean';applyUiTheme(theme);
+ if(!activeSessionId){q('#uiThemeInfo').textContent='Tento vzhled se použije pro novou sérii.';return;}
+ try{await api(`/api/sessions/${activeSessionId}/theme`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({uiTheme:theme})});q('#uiThemeInfo').innerHTML=theme==='legacy'?'Aktivní série používá <b>původní vzhled v0.6</b>.':'Aktivní série používá <b>čistý vzhled</b>.';}catch(e){alert('Vzhled se nepodařilo uložit: '+e.message);await loadActive();}
+}
+q('#uiTheme').addEventListener('change',saveUiTheme);
+async function closeSession(){if(!activeSessionId)return;if(!confirm('Opravdu ukončit aktivní sérii?'))return;await api('/api/sessions/'+activeSessionId+'/close',{method:'POST'});await refreshAll();}
+
+function undoHtml(x){if(!x.lastConfirmed)return '';const l=x.lastConfirmed;const info=`Poslední: ${esc(l.runnerName)} – ${Number(l.durationSeconds).toFixed(3)} s`;if(x.canUndo)return `<div class="undoBox"><div class="undoInfo">${info}</div><button class="undo" onclick="undoLane(${x.lane})">↶ UNDO poslední</button></div>`;return `<div class="undoBox"><div class="undoInfo">${info}<br>UNDO nyní nelze: ${esc(x.undoReason||'dráha není v bezpečném stavu')}</div><button class="undo" disabled>↶ UNDO poslední</button></div>`;}
+function queueHtml(x){const list=x.next||[];if(!list.length)return `<div class="next"><b>Další:</b><div>—</div></div>`;let h=`<div class="prepare"><div class="label">PŘIPRAVIT DALŠÍHO</div><div class="name">${esc(list[0].runnerName)}</div><div class="seq">pořadí ${list[0].sequence}</div></div>`;if(list.length>1){h+='<div class="after"><b>Potom:</b>';for(const n of list.slice(1))h+=`<div>${n.sequence}. ${esc(n.runnerName)}</div>`;h+='</div>';}return h;}
+function laneHtml(x){
+ const c=x.current;
+ if(!c){return `<div class="lane empty"><div class="lanehead"><h3>Dráha ${x.lane}</h3><span class="counter">hotovo ${x.completed}/${x.total}</span></div><div class="current"><span class="pill done">HOTOVO / PRÁZDNÁ</span><div class="runner">—</div></div>${undoHtml(x)}</div>`;}
+ const pending=c.status==='Pending';
+ let body=`<div class="lane ${pending?'pending':''}"><div class="lanehead"><h3>Dráha ${x.lane}</h3><span class="counter">hotovo ${x.completed}/${x.total}${x.skipped?`, přeskočeno ${x.skipped}`:''}</span></div><div class="current"><span class="pill ${pending?'wait':'ready'}">${pending?'ČEKÁ NA POTVRZENÍ':'PŘIPRAVEN'}</span><div class="runner">${esc(c.runnerName)}</div><div class="seq">pořadí ${c.sequence}</div>`;
+ if(pending&&x.pendingResult)body+=`<div class="pendingtime">${Number(x.pendingResult.durationSeconds).toFixed(3)} s</div><div class="actions"><button class="good" onclick="confirmResult(${x.pendingResult.id})">Potvrdit</button><button class="danger" onclick="rejectResult(${x.pendingResult.id})">Zrušit čas</button></div>`;
+ else body+=`<div class="actions" style="margin-top:9px"><button class="warn" onclick="skipEntry('${c.id}')">Přeskočit</button></div>`;
+ body+='</div>'+queueHtml(x)+undoHtml(x);return body+'</div>';
+}
+
+async function loadActive(){const station=q('#station').value.trim();if(!station)return;const a=await api('/api/sessions/active/'+encodeURIComponent(station));if(!a.active){activeSessionId=null;applyUiTheme(selectedUiTheme);q('#activeInfo').innerHTML='Žádná aktivní série.';q('#autoConfirmInfo').textContent=q('#autoConfirm').checked?'Automatické potvrzení bude použito pro novou sérii.':'Ruční potvrzení bude použito pro novou sérii.';q('#uiThemeInfo').textContent='Zvolený vzhled se použije pro novou sérii.';q('#laneGrid').innerHTML=Array.from({length:8},(_,i)=>laneHtml({lane:i+1,current:null,completed:0,total:0,skipped:0,lastConfirmed:null})).join('');return;}activeSessionId=a.id;applyUiTheme(a.uiTheme||'clean');q('#autoConfirm').checked=!!a.autoConfirmResults;q('#autoConfirmInfo').innerHTML=a.autoConfirmResults?'<span class="oktxt">Aktivní série: automatické potvrzení.</span>':'Aktivní série: ruční potvrzení.';q('#uiThemeInfo').innerHTML=(a.uiTheme==='legacy')?'Aktivní série používá <b>původní vzhled v0.6</b>.':'Aktivní série používá <b>čistý vzhled</b>.';q('#activeInfo').innerHTML=`<b>Aktivní:</b> ${esc(a.name)} &nbsp; <span>${fmtDate(a.createdAtUtc)}</span>`;q('#laneGrid').innerHTML=(a.lanes||[]).map(laneHtml).join('');}
+async function confirmResult(id){try{await api(`/api/results/${id}/confirm`,{method:'POST'});await refreshData();}catch(e){alert(e.message);}}
+async function rejectResult(id){if(!confirm('Zrušit tento čas? Stejný člověk zůstane na řadě.'))return;try{await api(`/api/results/${id}/reject`,{method:'POST'});await refreshData();}catch(e){alert(e.message);}}
+async function skipEntry(id){if(!confirm('Přeskočit aktuálního člověka? Další člověk na této dráze se připraví okamžitě.'))return;try{await api(`/api/startlist/${id}/skip`,{method:'POST'});await loadActive();}catch(e){alert(e.message);}}
+async function undoLane(lane){if(!activeSessionId)return;if(!confirm(`Vrátit poslední potvrzený výsledek na dráze ${lane}? Závodník se vrátí na řadu a původní výsledek zůstane v historii jako UNDO.`))return;try{await api(`/api/sessions/${activeSessionId}/lanes/${lane}/undo`,{method:'POST'});await refreshData();}catch(e){alert('UNDO nebylo provedeno:\n'+e.message);}}
+
+async function importTextList(){if(!activeSessionId)return alert('Nejdřív vytvoř aktivní sérii.');try{const r=await api(`/api/sessions/${activeSessionId}/startlist/import-text`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:q('#importText').value})});q('#importInfo').innerHTML=`<span class="oktxt">Importováno ${r.imported} lidí do ${r.lanes} drah.</span>`;await loadActive();await loadSessions();}catch(e){q('#importInfo').innerHTML=`<span class="badtxt">${esc(e.message)}</span>`;}}
+async function importFileList(){if(!activeSessionId)return alert('Nejdřív vytvoř aktivní sérii.');const f=q('#importFile').files[0];if(!f)return alert('Vyber CSV nebo XLSX.');const fd=new FormData();fd.append('file',f);try{const r=await api(`/api/sessions/${activeSessionId}/startlist/import-file`,{method:'POST',body:fd});q('#importInfo').innerHTML=`<span class="oktxt">Importováno ${r.imported} lidí do ${r.lanes} drah.</span>`;await loadActive();await loadSessions();}catch(e){q('#importInfo').innerHTML=`<span class="badtxt">${esc(e.message)}</span>`;}}
+
+async function testResult(){try{await api('/api/test/result',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({stationId:q('#station').value.trim(),lane:Number(q('#testLane').value),durationSeconds:Number(q('#testSeconds').value)})});await refreshData();}catch(e){alert('Test: '+e.message);}}
+async function loadSessions(){const list=await api('/api/sessions?take=200&stationId='+encodeURIComponent(q('#station').value.trim()));const sel=q('#filterSession'),old=sel.value;sel.innerHTML='<option value="">Všechny série</option>';for(const s of list)sel.insertAdjacentHTML('beforeend',`<option value="${esc(s.id)}">${esc(s.name)} (${s.resultCount}/${s.entryCount})</option>`);sel.value=old;}
+function buildFilter(){const p=new URLSearchParams();p.set('take','1000');const runner=q('#filterRunner').value.trim(),session=q('#filterSession').value,status=q('#filterStatus').value,station=q('#station').value.trim();if(runner)p.set('runner',runner);if(session)p.set('sessionId',session);if(status)p.set('status',status);if(station)p.set('stationId',station);return p;}
+async function loadResults(){const p=buildFilter(),data=await api('/api/results?'+p);const ep=new URLSearchParams(p);ep.delete('take');q('#exportLink').href='/api/export.xlsx?'+ep;q('#resultsBody').innerHTML=data.map(x=>{let act='';if(x.validationStatus==='Pending')act=`<div class="actions"><button class="good" onclick="confirmResult(${x.id})">Potvrdit</button><button class="danger" onclick="rejectResult(${x.id})">Zrušit</button></div>`;return `<tr><td>${fmtDate(x.startedAtUtc)}</td><td>${x.lane}</td><td>${x.sequence??''}</td><td>${esc(x.runner||'')}</td><td class="time">${Number(x.durationSeconds).toFixed(3)} s</td><td>${statusLabel(x.validationStatus)}</td><td>${esc(x.sessionName||'')}</td><td>${act}</td></tr>`;}).join('');}
+async function backupNow(){try{const b=await api('/api/admin/backup',{method:'POST'});q('#backupInfo').innerHTML=`Backup: <b>${esc(b.file)}</b>`;}catch(e){q('#backupInfo').textContent=e.message;}}
+async function refreshData(){await Promise.all([loadActive(),loadResults(),status(),loadDevice()]);}
+async function refreshAll(){await status();await Promise.all([loadActive(),loadSessions(),loadResults(),loadDevice()]);}
+let adminTimersStarted=false;
+function showLogin(){q('#adminApp').style.display='none';q('#loginScreen').style.display='flex';setTimeout(()=>q('#pinInput')?.focus(),50);}
+function showAdmin(){q('#loginScreen').style.display='none';q('#adminApp').style.display='block';if(!adminTimersStarted){adminTimersStarted=true;q('#station').addEventListener('change',refreshAll);refreshAll();setInterval(loadActive,2000);setInterval(loadResults,5000);setInterval(loadDevice,5000);setInterval(status,15000);}}
+async function checkAuth(){try{const r=await fetch('/api/auth/status');const j=await r.json();j.authenticated?showAdmin():showLogin();}catch{showLogin();}}
+async function loginAdmin(){q('#loginError').textContent='';const pin=q('#pinInput').value;try{const r=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pin})});if(!r.ok)throw new Error('Neplatný PIN');q('#pinInput').value='';showAdmin();}catch(e){q('#loginError').textContent='Neplatný PIN.';q('#pinInput').select();}}
+async function logoutAdmin(){await fetch('/api/auth/logout',{method:'POST'});showLogin();}
+q('#pinInput').addEventListener('keydown',e=>{if(e.key==='Enter')loginAdmin();});
+applyUiTheme(selectedUiTheme);
+checkAuth();
+</script></body></html>

@@ -1,0 +1,23 @@
+ESP32 Timer Server v0.9
+=======================
+
+Vzhled / UI
+- Nový výchozí "Čistý" vzhled pro administraci a veřejnou obrazovku.
+- Veřejná obrazovka zobrazuje na jednom místě pro každou z 8 drah:
+  * aktuálního běžce,
+  * stav PŘIPRAVEN / BĚŽÍ / V CÍLI / OFFLINE,
+  * další dva běžce na řadě,
+  * TOP 5 nejlepších potvrzených časů konkrétní dráhy.
+- Zachován původní vzhled v0.6 jako přepínatelná varianta.
+- Volba vzhledu je v administraci v nastavení aktivní série.
+- Zvolený vzhled se automaticky použije i na veřejné obrazovce a obrazovce vyhlášení.
+
+Databáze / kompatibilita
+- RunSessions doplněno o UiTheme (clean / legacy).
+- Migrace proběhne automaticky při startu; existující data se nemažou.
+- Výchozí hodnota nového sloupce je clean.
+- SchemaVersion zvýšena na 5.
+
+Funkčnost
+- Zachována automatická/ruční validace výsledků, UNDO, import, export a stávající API zařízení.
+- Firmware ESP32 není potřeba měnit.

@@ -1,0 +1,7 @@
+FW v1.3.0
+=========
+- odstraněn LittleFS
+- offline ukládání převedeno na Preferences / NVS
+- maximálně 1 trvale uložený pending výsledek na každou z 8 drah
+- zachován DeviceEventId při retry
+- zachováno OTA, RTC/NTP, baterie GPIO36, heartbeat a bezpečné zamykání dráhy

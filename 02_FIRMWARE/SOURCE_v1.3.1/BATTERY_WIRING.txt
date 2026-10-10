@@ -1,0 +1,19 @@
+MĚŘENÍ BATERIE – FW v1.3
+========================
+
+Potřebné navíc:
+- 2x rezistor 100 kΩ (ideálně 1 %)
+- 1x kondenzátor 100 nF (volitelný, doporučený)
+
+Zapojení:
+
+18650 + / BAT+ ----- 100k -----+------ GPIO36 (VP)
+                               |
+                              100k
+                               |
+GND ---------------------------+------ GND ESP32
+
+Volitelný 100nF kondenzátor zapoj mezi GPIO36 a GND.
+
+NEPŘIPOJOVAT GPIO36 přímo na 18650.
+Měřicí bod musí být na článku před step-up měničem MT3608.

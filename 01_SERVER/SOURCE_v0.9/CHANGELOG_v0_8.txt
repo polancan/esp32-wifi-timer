@@ -1,0 +1,16 @@
+ESP32 Timer Server v0.8
+=======================
+
+- Sloučena provozní výsledková obrazovka a průběžné TOP 5 do jedné stránky /display.
+- Každá dráha nyní zobrazuje aktuálního běžce, další dva běžce a průběžných TOP 5 časů.
+- Výrazně rozlišeny stavy aktuálního běžce:
+  * PŘIPRAVEN – JEŠTĚ NESTARTOVAL
+  * BĚŽÍ – ČAS SE MĚŘÍ
+  * V CÍLI – ČEKÁ NA VYHODNOCENÍ
+  * STAV ČASOMÍRY NENÍ ONLINE
+- Stav BĚŽÍ vychází přímo z RunningMask hlášeného ESP32. Pokud běžec fyzicky vyběhne a stránka zůstane na PŘIPRAVEN, je vidět, že START nebyl časomírou zachycen.
+- Přidán stav deviceOnline do veřejných dat, aby výpadek komunikace nebyl zaměněn za stav „ještě nestartoval“.
+- Hlavní menu zjednodušeno na Admin + Průběh soutěže.
+- Samostatná stránka /top zůstává pro vyhlášení výsledků po skončení soutěže a je dostupná z provozní obrazovky.
+- Databázové schéma beze změny proti v0.7.
+- Firmware není nutné měnit; využívá se již existující RunningMask/WaitingMask ve FW v1.3.1.

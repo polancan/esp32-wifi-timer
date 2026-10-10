@@ -1,0 +1,14 @@
+* text=auto
+*.md text eol=lf
+*.yml text eol=lf
+*.cs text eol=lf
+*.csproj text eol=lf
+*.ino text eol=lf
+*.scad text eol=lf
+*.html text eol=lf
+*.json text eol=lf
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.zip binary
+*.png binary
+*.stl binary

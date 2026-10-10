@@ -1,0 +1,15 @@
+ESP32 TIMER - CURRENT VERSION MATRIX - 2026-10-07
+
+SERVER:    v0.9 / .NET 10 / ASP.NET Core / SQLite SchemaVersion 5
+FIRMWARE:  v1.3.1 / ESP32 Arduino / NVS / ArduinoJson 6+7
+3D:        V1.7 / PG7 / OpenSCAD + STL / final material PETG
+STATION:   TIMER01
+ADMIN PIN: 2026 (DEFAULT - CHANGE FOR REAL USE)
+DEVICE KEY: CHANGE_ME_DEVICE_KEY (DEFAULT - MUST MATCH SERVER+ESP - CHANGE FOR REAL USE)
+OTA PASS:  timer-ota (DEFAULT - CHANGE FOR REAL USE)
+
+UI THEMES: clean (default), legacy (v0.6 look)
+PUBLIC: /display = live operation; /top = final/top results
+TOP 5: per lane, confirmed results only
+
+MECHANICAL NOTE: central box remains PG7 in V1.7. GX16/M12 is NOT decided.

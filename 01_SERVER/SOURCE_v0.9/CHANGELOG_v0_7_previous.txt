@@ -1,0 +1,12 @@
+ESP32 Timer Server v0.7
+=======================
+
+Změny proti v0.6:
+- Přidána samostatná veřejná obrazovka TOP 5 (/top).
+- Pro každou z 8 drah zobrazuje pět nejrychlejších potvrzených časů aktuální aktivní série.
+- Žebříček používá pouze výsledky ValidationStatus='Confirmed' a dokončené startovní položky.
+- Pending, Rejected a Undone výsledky se do TOP 5 nezapočítávají.
+- Po UNDO se výsledek při další automatické aktualizaci ze žebříčku odstraní.
+- Přidán veřejný endpoint GET /api/public/top/{stationId}?take=5.
+- Hlavní menu nyní obsahuje třetí volbu „TOP 5 časy“.
+- Databázové schéma se proti v0.6 nemění.
