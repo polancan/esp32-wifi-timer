@@ -42,6 +42,8 @@ V Arduino IDE otevřete [sketch ESP32](02_FIRMWARE/SOURCE_v1.3.1/ESP32_Timer_Ard
 
 Zapojení a pinout jsou v [hardwarové dokumentaci](05_DOCUMENTATION/07_HARDWARE_AND_WIRING.md). Všech osm vstupů vyžaduje externí 10k pull-up na 3,3 V. Referenční obrázky nenahrazují ověření skutečného zapojení. Aktuální krabička má otvory pro PG7; rychlokonektory zůstávají otevřeným návrhovým bodem.
 
+Pro variantu s 30pin DevKit V1, osmi suchými kontakty a nastavitelnou izolovanou smyčkou 12–24 V jsou připravené [podklady PCB Rev A](04_HARDWARE/PCB_REV_A/README.md). Jde o zadání pro návrh a ověření desky; Gerbery, finální footprinty a změřený prototyp dosud nejsou hotové.
+
 ## Obsah repozitáře
 
 | Složka | Obsah |
