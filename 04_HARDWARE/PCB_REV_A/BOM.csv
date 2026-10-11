@@ -1,0 +1,23 @@
+Reference;Pocet;Popis;Hodnota_typ;Stav;Poznamka
+MOD_ESP;1;ESP32 DevKit V1 30pin;konkretni kus zmerit;MECHANICAL_HOLD;zasuvny modul 2x15 pinu
+BT1;1;chraneny clanek a drzak 18650;1S;MECHANICAL_HOLD;nabijeni mimo PCB
+SW1;1;hlavni vypinac;DC proud nejmene 3A;MECHANICAL_HOLD;pred boostem proud baterie muze byt vyssi nez proud 5V vystupu
+U_5V;1;boost 1S na 5V;5V 2A trvale;ELECTRICAL_HOLD;TPS61088 navrhovy kandidat nebo kvalifikovany modul
+U_ISO;1;izolovany DC DC;REC5-0505SRW/H4/A;SELECTED_CANDIDATE;overit dostupnost a aktualni footprint
+U_FIELD;1;izolovany step-up za U_ISO;5V na 12 az 24V nejmene 100mA;ELECTRICAL_HOLD;TPS55340 navrhovy kandidat nebo kvalifikovany modul
+U1-U8;8;opto tranzistorovy;EL817C-G;SELECTED_CANDIDATE;CTR C bin a THT pouzdro dle datasheetu
+R1-R8;8;omezovaci rezistor smycky;2k2 0.5W;VALUE_SET;overit teplotni derating a vhodny footprint
+RP1-RP8;8;pull-up vystupu optoclenu;10k 0.1W nebo vice;VALUE_SET;jen na 3V3
+D1-D8;8;antiparalelni ochranna dioda LED optoclenu;1N4148;VALUE_SET;overit polaritu pri routovani
+J1-J8;8;dvoupolova svorkovnice pro suchy kontakt;pro 0.75mm2 kabel;MECHANICAL_HOLD;roztec a vyska dle zvoleneho dilu
+T1-T8;8;volitelny footprint TVS na vstupu;DNP;OPTIONAL;typ podle EMC zkousky a 24V regulace
+F_FIELD;1;pojistka nebo proudove omezeni pole;dimenzovat pro 8x 10.4mA;ELECTRICAL_HOLD;chranit prime zkraty FIELD+ na F_GND
+C_FIELD;1;vystupni kondenzator pole;min 35V prednostne 50V;VALUE_SET;kapacita podle U_FIELD
+CI_ISO-CO_ISO;2;blokovani izolovaneho DC DC;dle RECOM datasheetu;ELECTRICAL_HOLD;na kazde strane vlastni zem
+TP_F24-TP_FGND;2;merici body izolovaneho pole;testpad;VALUE_SET;umisteni pristupne po sejmuti vika
+RTC1;1;DS3231 RTC;3.3V varianta;MODULE_HOLD;bez nebezpecneho nabijeni CR2032
+R_SDA-R_SCL;2;I2C pull-up;typicky 4k7;MODULE_HOLD;neosazovat pokud je na vybranem RTC modulu spravne 3.3V pull-up
+R_BAT_TOP-R_BAT_BOTTOM;2;delic baterie;100k;VALUE_SET;BAT+ pred boostem na GPIO36
+C_BAT;1;ADC filtr;100nF;OPTIONAL;GPIO36 na GND_LOGIC
+LED_WIFI-LED_DATA;2;stavove LED s rezistory;dle firmware;MODULE_HOLD;overit polaritu a mechaniku vika
+SW_SERVICE;1;servisni tlacitko;dle puvodniho zapojeni;MODULE_HOLD;GPIO19 a klidovy stav overit

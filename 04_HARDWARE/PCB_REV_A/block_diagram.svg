@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="740" viewBox="0 0 1200 740">
+  <defs>
+    <style>
+      .bg{fill:#f8fafc}.logic{fill:#e0f2fe;stroke:#0284c7;stroke-width:2}.field{fill:#fef3c7;stroke:#d97706;stroke-width:2}
+      .iso{fill:#f3e8ff;stroke:#9333ea;stroke-width:2}.box{rx:12}.wire{stroke:#334155;stroke-width:3;fill:none}
+      .dash{stroke:#a855f7;stroke-width:2;stroke-dasharray:8 6}.title{font:700 25px sans-serif;fill:#0f172a}
+      .head{font:700 17px sans-serif;fill:#0f172a}.body{font:15px sans-serif;fill:#334155}.small{font:13px sans-serif;fill:#475569}
+    </style>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9Z" fill="#334155"/></marker>
+  </defs>
+  <rect class="bg" x="0" y="0" width="1200" height="740"/>
+  <text x="42" y="46" class="title">ESP32 Timer · PCB Rev A · izolované tlačítkové smyčky</text>
+  <text x="42" y="75" class="body">Koncepční schéma pro návrh PCB — ne výrobní schéma ani Gerbery</text>
+  <rect class="logic box" x="42" y="112" width="170" height="82"/><text x="58" y="145" class="head">18650 + ochrana</text><text x="58" y="170" class="body">vypínač, 1S</text>
+  <path class="wire" d="M212 153 H253" marker-end="url(#arr)"/>
+  <rect class="logic box" x="263" y="112" width="175" height="82"/><text x="279" y="145" class="head">Boost 1S → 5 V</text><text x="279" y="170" class="body">≥ 2 A trvale</text>
+  <path class="wire" d="M438 153 H490" marker-end="url(#arr)"/>
+  <rect class="logic box" x="500" y="112" width="180" height="82"/><text x="516" y="145" class="head">ESP32 DevKit V1</text><text x="516" y="170" class="body">30 pin · VIN 5 V</text>
+  <path class="wire" d="M438 153 V258 H492" marker-end="url(#arr)"/>
+  <rect class="iso box" x="502" y="220" width="182" height="82"/><text x="518" y="253" class="head">Izolovaný 5/5 V</text><text x="518" y="278" class="body">RECOM 5 W</text>
+  <path class="wire" d="M684 261 H728" marker-end="url(#arr)"/>
+  <rect class="field box" x="738" y="220" width="220" height="82"/><text x="754" y="253" class="head">Step-up + omezení</text><text x="754" y="278" class="body">nastavit 12–24 V DC</text>
+  <path class="wire" d="M848 302 V362" marker-end="url(#arr)"/>
+  <rect class="field box" x="738" y="372" width="220" height="80"/><text x="754" y="405" class="head">F_FIELD+ / F_GND</text><text x="754" y="430" class="body">oddělená zem, testpointy</text>
+  <path class="dash" d="M710 205 V635"/><text x="590" y="622" class="small">GND_LOGIC</text><text x="725" y="622" class="small">F_GND</text>
+  <rect class="field box" x="740" y="488" width="216" height="105"/><text x="756" y="520" class="head">J1…J8 · 2 vodiče</text><text x="756" y="546" class="body">suché kontakty</text><text x="756" y="570" class="small">cca 5 m na každou dráhu</text>
+  <path class="wire" d="M848 452 V478" marker-end="url(#arr)"/>
+  <rect class="iso box" x="470" y="488" width="207" height="105"/><text x="486" y="520" class="head">8× EL817C-G</text><text x="486" y="546" class="body">2k2 / 0,5 W + dioda</text><text x="486" y="570" class="small">kolektor → GPIO</text>
+  <path class="wire" d="M740 540 H687" marker-end="url(#arr)"/>
+  <path class="wire" d="M470 540 H287 V525 H259" marker-end="url(#arr)"/>
+  <rect class="logic box" x="42" y="483" width="207" height="113"/><text x="58" y="516" class="head">GPIO 1…8</text><text x="58" y="542" class="body">10k pull-up na 3,3 V</text><text x="58" y="568" class="body">stisk = LOW</text>
+  <text x="42" y="679" class="body">GPIO: 32, 33, 25, 26, 27, 14, 34, 35 · PCB obálka 140 × 76 mm · 8× PG7 ve skříni V1.7</text>
+  <text x="42" y="707" class="small">Před výrobou: přesné footprinty, nativní schéma a PCB, ERC/DRC, Gerber/Excellon, mechanický a teplotní test.</text>
+</svg>
