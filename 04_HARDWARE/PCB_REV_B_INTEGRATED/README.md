@@ -2,9 +2,9 @@
 
 Stav 2026-10-11: návrhové podklady, **zatím neobjednávat PCB**. Tato revize nahrazuje zásuvný DevKit z PCB_REV_A pájeným modulem ESP32-WROOM-32E-N4. Požadavek je jedna základní deska s USB-C programováním, nabíjením 18650 a provozem při nabíjení; USB-C CC režim hlídá TUSB320I, osm opticky oddělených smyček 12–24 V, RTC, stavovými LED, servisními tlačítky a expanzním headerem.
 
-Soubory: ARCHITECTURE.md popisuje elektrické řešení, PINOUT.md mapuje GPIO, BOM.csv uvádí komponenty a otevřené volby, NETS.csv klíčové sítě, placement.svg ukazuje cílové rozmístění v měřítku, RELEASE_GATES.md obsahuje úkoly před výrobou.
+Soubory: `SCHEMATIC_DRAFT.md` je pracovní elektrické zapojení po čtyřech listech, `COLLISION_AUDIT.md` zaznamenává prokázané kolize; `ARCHITECTURE.md` popisuje architekturu, `PINOUT.md` mapuje GPIO, `BOM.csv` uvádí komponenty a otevřené volby, `NETS.csv` klíčové sítě, `placement.svg` ukazuje **neplatné** předběžné rozmístění, `RELEASE_GATES.md` obsahuje úkoly před výrobou.
 
-Toto **není hotový CAD projekt**. Chybí nativní schéma, přesné footprinty, routování, ERC/DRC, Gerber/Excellon a test prototypu. SVG je obálkový placement, nikoli důkaz montovatelnosti. Všechny elektronické obvody jsou koncipované na jedné PCB; vyměnitelná baterie s teplotním čidlem se připojí klíčovaným třížilovým konektorem. USB konektor vyžaduje nový otvor v krabičce V1.7.
+Toto **není hotový CAD projekt**. Chybí nativní schéma, uzavřené hodnoty některých výkonových obvodů, přesné footprinty, routování, ERC/DRC, Gerber/Excellon a test prototypu. SVG je obálkový placement a má nejméně tři mechanické kolize; nepoužívat jej jako základ routování. Všechny elektronické obvody jsou koncipované na jedné PCB; vyměnitelná baterie s teplotním čidlem se připojí klíčovaným třížilovým konektorem. USB konektor vyžaduje nový otvor v krabičce V1.7.
 
 Firmware v 02_FIRMWARE/SOURCE_v1.3.1 určuje osm vstupních GPIO 32,33,25,26,27,14,34,35, RTC 21/22, LED 23/18, SERVICE 19 a BAT ADC 36. Tato revize zachovává jejich význam a polaritu.
 

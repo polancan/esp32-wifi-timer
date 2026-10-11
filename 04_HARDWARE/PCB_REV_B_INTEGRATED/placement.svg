@@ -88,5 +88,8 @@
 <defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1c3852"/></marker></defs>
 <text x="475" y="582" text-anchor="middle" font-size="11" font-family="Arial">140 mm</text>
 <text x="55" y="598" font-size="11" font-family="Arial" fill="#455b70">Baterie 18650 je na klíčovaném třížilovém kabelu mimo PCB; všechny aktivní obvody jsou na této desce.</text>
-<text x="55" y="617" font-size="11" font-family="Arial" fill="#455b70">Přesné pouzdro/anténní zónu, rozměry svorek, tepelnou oblast, otvory a USB výřez ověřit v KiCadu a prototypu.</text>
+<text x="55" y="617" font-size="11" font-family="Arial" fill="#b32424" font-weight="bold">NEPLATNÉ PRO ROUTOVÁNÍ: prokázané kolize měniče s otvorem, REC5 se svorkami a místa RTC/CR2032.</text>
+<circle cx="805" cy="114" r="26" fill="none" stroke="#d71920" stroke-width="4"/>
+<rect x="647" y="388" width="64" height="52" fill="none" stroke="#d71920" stroke-width="4"/>
+<rect x="233" y="340" width="118" height="100" fill="none" stroke="#d71920" stroke-width="4"/>
 </svg>
